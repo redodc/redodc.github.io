@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redodc - Renderización Dinámica</title>
+    <title>Redodc - Electronica y ocio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8e8e8;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .navbar, .footer {
             background-color: #343a40;
@@ -20,11 +23,38 @@
             padding: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            flex-grow: 1;
         }
         .card img {
             max-height: 200px;
             object-fit: cover;
             border-radius: 10px;
+        }
+        .footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .home-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .home-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .home-text {
+            flex-grow: 1;
+            text-align: left;
+            padding-right: 10px;
         }
     </style>
 </head>
@@ -33,7 +63,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#" onclick="renderizarInicio()">Redodc</a>
+            <a class="navbar-brand" href="#" onclick="renderizarHome()">Redodc</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -44,10 +74,7 @@
     </nav>
     
     <!-- Contenido -->
-    <div class="container content-container" id="contenido">
-        <h2>Bienvenido a Redodc</h2>
-        <p>Selecciona una categoría para ver más contenido.</p>
-    </div>
+    <div class="container content-container" id="contenido"></div>
     
     <!-- Footer -->
     <footer class="footer py-3 mt-4">
@@ -57,76 +84,29 @@
     <script>
         document.getElementById("footer-text").innerText += " - " + new Date().getFullYear();
 
-        const categorias = [
-            {
-                nombre: "Electrónica",
-                subcategorias: [
-                    { nombre: "Electrónica Analógica", descripcion: "Circuitos clásicos con resistencias y capacitores.", imagen: "analogica.png" },
-                    { nombre: "Electrónica de Control", descripcion: "Automatización y control industrial.", imagen: "control.png" },
-                    { nombre: "Electrónica de Potencia", descripcion: "Sistemas de alta potencia y conversión de energía.", imagen: "potencia.png" }
-                ]
-            },
-            {
-                nombre: "Videojuegos Retro",
-                subcategorias: [
-                    { nombre: "Consolas Clásicas", descripcion: "Historia de las consolas de antaño.", imagen: "consolas.png" },
-                    { nombre: "Arcades", descripcion: "Las legendarias máquinas recreativas.", imagen: "arcades.png" },
-                    { nombre: "Homebrew", descripcion: "Desarrollo de juegos por la comunidad.", imagen: "homebrew.png" }
-                ]
-            }
+        const contenidoHome = [
+            { fecha: "2025-02-13", texto: "Bienvenido a Redodc, un espacio para compartir sobre electrónica y videojuegos retro.", imagen: "https://via.placeholder.com/50" }
         ];
 
-        function renderizarMenu() {
-            const menu = document.getElementById("menuCategorias");
-            menu.innerHTML = "";
-            categorias.forEach((categoria, index) => {
-                let li = document.createElement("li");
-                li.classList.add("nav-item");
-
-                let a = document.createElement("a");
-                a.classList.add("nav-link");
-                a.href = "#";
-                a.textContent = categoria.nombre;
-                a.dataset.index = index;
-                a.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    renderizarSubcategorias(event.target.dataset.index);
-                });
-
-                li.appendChild(a);
-                menu.appendChild(li);
-            });
-        }
-
-        function renderizarSubcategorias(index) {
+        function renderizarHome() {
             const contenido = document.getElementById("contenido");
-            const categoria = categorias[index];
-            let html = `<h2>${categoria.nombre}</h2><div class='row mt-4'>`;
-            categoria.subcategorias.forEach(sub => {
+            let html = `<h2>Novedades</h2>`;
+            contenidoHome.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+            contenidoHome.forEach(entry => {
                 html += `
-                    <div class='col-md-4'>
-                        <div class='card shadow-sm mb-4'>
-                            <img src='${sub.imagen}' class='card-img-top' alt='${sub.nombre}'>
-                            <div class='card-body'>
-                                <h5 class='card-title'>${sub.nombre}</h5>
-                                <p class='card-text'>${sub.descripcion}</p>
-                            </div>
+                    <div class='home-item'>
+                        <div class='home-text'>
+                            <p>${entry.texto}</p>
+                            <small>${entry.fecha}</small>
                         </div>
+                        <img src='${entry.imagen}' alt='Imagen'>
                     </div>
                 `;
             });
-            html += `</div>`;
             contenido.innerHTML = html;
         }
 
-        function renderizarInicio() {
-            document.getElementById("contenido").innerHTML = `
-                <h2>Bienvenido a Redodc</h2>
-                <p>Selecciona una categoría para ver más contenido.</p>
-            `;
-        }
-
-        renderizarMenu();
+        renderizarHome();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
