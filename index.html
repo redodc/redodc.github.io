@@ -84,60 +84,57 @@
     <script>
         document.getElementById("footer-text").innerText += " - " + new Date().getFullYear();
 
-        const contenidoHome = [
-            { fecha: "2025-02-13", texto: "Bienvenido a Redodc, un espacio para compartir sobre electrónica y videojuegos retro.", imagen: "https://via.placeholder.com/50" }
-        ];
+        async function cargarDatos() {
+            try {
+                const response = await fetch("doc/global.json"); // Cargar el JSON desde el nuevo archivo
+                const data = await response.json(); // Convertir a objeto
 
-        const categorias = [
-            { nombre: "Proyectos", subcategorias: ["Sistemas embebidos","Automatización industrial"] },
-            { nombre: "Electrónica", subcategorias: ["Electrónica Analógica", "Electrónica de Control", "Electrónica de Potencia"] },
-            { nombre: "Videojuegos Retro", subcategorias: ["Consolas Clásicas", "Arcades Retro", "Desarrollo Homebrew"] }
-        ];
+                // Renderizar categorías en el navbar
+                const menu = document.getElementById("menuCategorias");
+                menu.innerHTML = ""; // Limpiar antes de agregar elementos
+                data.categorias.forEach(cat => {
+                    let item = document.createElement("li");
+                    item.classList.add("nav-item");
 
-        function renderizarHome() {
-            const contenido = document.getElementById("contenido");
-            let html = `<h2>Novedades</h2>`;
-            contenidoHome.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-            contenidoHome.forEach(entry => {
-                html += `
-                    <div class='home-item'>
-                        <div class='home-text'>
-                            <p>${entry.texto}</p>
-                            <small>${entry.fecha}</small>
-                        </div>
-                        <img src='${entry.imagen}' alt='Imagen'>
-                    </div>
-                `;
-            });
-            contenido.innerHTML = html;
-        }
+                    let link = document.createElement("a");
+                    link.classList.add("nav-link");
+                    link.href = "#";
+                    link.innerText = cat.nombre;
+                    link.onclick = () => renderizarCategoria(cat);
 
-        function cargarCategorias() {
-            const menu = document.getElementById("menuCategorias");
-            categorias.forEach(cat => {
-                let item = document.createElement("li");
-                item.classList.add("nav-item");
-                let link = document.createElement("a");
-                link.classList.add("nav-link");
-                link.href = "#";
-                link.innerText = cat.nombre;
-                link.onclick = () => renderizarCategoria(cat);
-                item.appendChild(link);
-                menu.appendChild(item);
-            });
+                    item.appendChild(link);
+                    menu.appendChild(item);
+                });
+
+                renderizarHome(); // Cargar la vista inicial (Novedades)
+            } catch (error) {
+                console.error("Error cargando los datos:", error);
+            }
         }
 
         function renderizarCategoria(categoria) {
             const contenido = document.getElementById("contenido");
             let html = `<h2>${categoria.nombre}</h2>`;
-            categoria.subcategorias.forEach(sub => {
-                html += `<div class='home-item'><div class='home-text'><p>${sub}</p></div></div>`;
-            });
+
+            if (categoria.subcategorias && categoria.subcategorias.length > 0) {
+                categoria.subcategorias.forEach(sub => {
+                    html += `
+                        <div class='home-item'>
+                            <div class='home-text'>
+                                <p><strong>${sub.nombre}</strong></p>
+                                <p>${sub.descripcion}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                html += `<p>No hay subcategorías disponibles.</p>`;
+            }
+
             contenido.innerHTML = html;
         }
 
-        cargarCategorias();
-        renderizarHome();
+        cargarDatos();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
