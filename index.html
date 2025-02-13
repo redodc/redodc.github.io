@@ -1,146 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RedoDC</title>
-    <!-- Incluye los enlaces a Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Redodc - Renderización Dinámica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8e8e8;
+            text-align: center;
+        }
+        .navbar, .footer {
+            background-color: #343a40;
+            color: white;
+        }
+        .content-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .card img {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Cabecera -->
-    <div class="jumbotron text-center">
-        <h1>RedoDC</h1>
-        <p>Desarrollo de proyectos automatizados, electronica y videojuegos.</p>
-      </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"> RedoDc </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#modalProyectos">Proyectos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#modalElectronica">Electrónica</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#modalVideojuegos">Videojuegos Retro</a>
-                </li>
-            </ul>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="renderizarInicio()">Redodc</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto" id="menuCategorias"></ul>
+            </div>
         </div>
     </nav>
-
-    <!-- Modal para Proyectos -->
-    <div class="modal fade" id="modalProyectos" tabindex="-1" role="dialog" aria-labelledby="modalProyectosLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalProyectosLabel">Proyectos</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Aquí puedes ver los detalles de mis proyectos.</p>
-                    <div class="container">
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <h3>Arduino</h3>
-                            <p>Proyectos basados en arduino IDE</p>
-                          </div>
-                          <div class="col-sm-3">
-                            <h3>Microcontroladores</h3>
-                            <p>Proyectos mas profundos utilizando sistemas electronicos</p>
-                          </div>
-                          <div class="col-sm-3">
-                            <h3>Automatización</h3>
-                            <p>Proyectosm basados en automatas industriales y similares.</p>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-            </div>
-        </div>
+    
+    <!-- Contenido -->
+    <div class="container content-container" id="contenido">
+        <h2>Bienvenido a Redodc</h2>
+        <p>Selecciona una categoría para ver más contenido.</p>
     </div>
+    
+    <!-- Footer -->
+    <footer class="footer py-3 mt-4">
+        <p id="footer-text">Contenido generado por Redodc</p>
+    </footer>
+    
+    <script>
+        document.getElementById("footer-text").innerText += " - " + new Date().getFullYear();
 
-    <!-- Modal para Electrónica -->
-    <div class="modal fade" id="modalElectronica" tabindex="-1" role="dialog" aria-labelledby="modalElectronicaLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalElectronicaLabel">Electrónica</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Aquí puedes ver los detalles sobre mis proyectos de electrónica.</p>
-                    <div class="container">
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <h3>Control</h3>
-                            <p>Sistemas basados en control y la gestion (Drivers).</p>
-                          </div>
-                          <div class="col-sm-3">
-                            <h3>Potencia</h3>
-                            <p>Sistemas electronicos de potencia.</p>
-                          </div>
-                          <div class="col-sm-3">
-                            <h3>Analogica</h3>
-                            <p>Sistemas electronicos basados en circuitos analogicos.</p>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        const categorias = [
+            {
+                nombre: "Electrónica",
+                subcategorias: [
+                    { nombre: "Electrónica Analógica", descripcion: "Circuitos clásicos con resistencias y capacitores.", imagen: "analogica.png" },
+                    { nombre: "Electrónica de Control", descripcion: "Automatización y control industrial.", imagen: "control.png" },
+                    { nombre: "Electrónica de Potencia", descripcion: "Sistemas de alta potencia y conversión de energía.", imagen: "potencia.png" }
+                ]
+            },
+            {
+                nombre: "Videojuegos Retro",
+                subcategorias: [
+                    { nombre: "Consolas Clásicas", descripcion: "Historia de las consolas de antaño.", imagen: "consolas.png" },
+                    { nombre: "Arcades", descripcion: "Las legendarias máquinas recreativas.", imagen: "arcades.png" },
+                    { nombre: "Homebrew", descripcion: "Desarrollo de juegos por la comunidad.", imagen: "homebrew.png" }
+                ]
+            }
+        ];
 
-    <!-- Modal para Videojuegos Retro -->
-    <div class="modal fade" id="modalVideojuegos" tabindex="-1" role="dialog" aria-labelledby="modalVideojuegosLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalVideojuegosLabel">Videojuegos Retro</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Aquí puedes ver los detalles sobre mis videojuegos retro favoritos.</p>
-                    <div class="row">
-                        <div class="col-sm-3">
-                          <h3>RetroMods</h3>
-                          <p>Mods para videoconsolas retro.</p>
-                        </div>
-                        <div class="col-sm-3">
-                          <h3>Desarrollo</h3>
-                          <p>Pruebas y pequeños proyectos en sistemas retro.</p>
-                        </divSistemas elect>
-                        <div class="col-sm-3">
-                          <h3>Briconsola.</h3>
-                          <p>Modding y bricomania consolera.</p>
-                        </div>
-                      </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        function renderizarMenu() {
+            const menu = document.getElementById("menuCategorias");
+            menu.innerHTML = "";
+            categorias.forEach((categoria, index) => {
+                let li = document.createElement("li");
+                li.classList.add("nav-item");
 
-    <!-- Scripts de Bootstrap (incluye jQuery, Popper.js y Bootstrap JS) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                let a = document.createElement("a");
+                a.classList.add("nav-link");
+                a.href = "#";
+                a.textContent = categoria.nombre;
+                a.dataset.index = index;
+                a.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    renderizarSubcategorias(event.target.dataset.index);
+                });
+
+                li.appendChild(a);
+                menu.appendChild(li);
+            });
+        }
+
+        function renderizarSubcategorias(index) {
+            const contenido = document.getElementById("contenido");
+            const categoria = categorias[index];
+            let html = `<h2>${categoria.nombre}</h2><div class='row mt-4'>`;
+            categoria.subcategorias.forEach(sub => {
+                html += `
+                    <div class='col-md-4'>
+                        <div class='card shadow-sm mb-4'>
+                            <img src='${sub.imagen}' class='card-img-top' alt='${sub.nombre}'>
+                            <div class='card-body'>
+                                <h5 class='card-title'>${sub.nombre}</h5>
+                                <p class='card-text'>${sub.descripcion}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            contenido.innerHTML = html;
+        }
+
+        function renderizarInicio() {
+            document.getElementById("contenido").innerHTML = `
+                <h2>Bienvenido a Redodc</h2>
+                <p>Selecciona una categoría para ver más contenido.</p>
+            `;
+        }
+
+        renderizarMenu();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
