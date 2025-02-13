@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redodc - Electronica y ocio</title>
+    <title>Redodc - Renderización Dinámica</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -88,6 +88,12 @@
             { fecha: "2025-02-13", texto: "Bienvenido a Redodc, un espacio para compartir sobre electrónica y videojuegos retro.", imagen: "https://via.placeholder.com/50" }
         ];
 
+        const categorias = [
+            { nombre: "Proyectos", subcategorias: [] },
+            { nombre: "Electrónica", subcategorias: ["Electrónica Analógica", "Electrónica de Control", "Electrónica de Potencia"] },
+            { nombre: "Videojuegos Retro", subcategorias: ["Consolas Clásicas", "Arcades Retro", "Desarrollo Homebrew"] }
+        ];
+
         function renderizarHome() {
             const contenido = document.getElementById("contenido");
             let html = `<h2>Novedades</h2>`;
@@ -106,6 +112,31 @@
             contenido.innerHTML = html;
         }
 
+        function cargarCategorias() {
+            const menu = document.getElementById("menuCategorias");
+            categorias.forEach(cat => {
+                let item = document.createElement("li");
+                item.classList.add("nav-item");
+                let link = document.createElement("a");
+                link.classList.add("nav-link");
+                link.href = "#";
+                link.innerText = cat.nombre;
+                link.onclick = () => renderizarCategoria(cat);
+                item.appendChild(link);
+                menu.appendChild(item);
+            });
+        }
+
+        function renderizarCategoria(categoria) {
+            const contenido = document.getElementById("contenido");
+            let html = `<h2>${categoria.nombre}</h2>`;
+            categoria.subcategorias.forEach(sub => {
+                html += `<div class='home-item'><div class='home-text'><p>${sub}</p></div></div>`;
+            });
+            contenido.innerHTML = html;
+        }
+
+        cargarCategorias();
         renderizarHome();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
