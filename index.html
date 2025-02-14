@@ -136,14 +136,14 @@
             }
         }
 
-        function renderizarCategoria(categoria) {
+        async function renderizarCategoria(categoria) {
             const contenido = document.getElementById("contenido");
             let html = `<h2>${categoria.nombre}</h2>`;
 
             if (categoria.subcategorias && categoria.subcategorias.length > 0) {
                 categoria.subcategorias.forEach(sub => {
                     html += `
-                        <div class='home-item'>
+                        <div class='home-item' onclick='renderizarSubcategoria("${categoria.nombre}", "${sub.nombre}")'>
                             <div class='home-text'>
                                 <p><strong>${sub.nombre}</strong></p>
                                 <p>${sub.descripcion}</p>
@@ -156,6 +156,33 @@
             }
 
             contenido.innerHTML = html;
+        }
+
+        async function renderizarSubcategoria(categoria, subcategoria) {
+            try {
+                const response = await fetch("doc/contenido.json");
+                const contenidos = await response.json();
+                const contenido = document.getElementById("contenido");
+                
+                let html = `<h2>${subcategoria}</h2>`;
+                contenidos.filter(c => c.categoria === categoria && c.subcategoria === subcategoria)
+                    .forEach(item => {
+                        html += `
+                            <div class='home-item'>
+                                <div class='home-text'>
+                                    <h4>${item.titulo}</h4>
+                                    <p>${item.descripcion}</p>
+                                    <p>${item.articulo}</p>
+                                </div>
+                                <img src="${item.media}" alt="Imagen relacionada">
+                            </div>
+                        `;
+                    });
+                
+                contenido.innerHTML = html;
+            } catch (error) {
+                console.error("Error cargando el contenido:", error);
+            }
         }
 
         cargarDatos();
