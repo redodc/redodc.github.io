@@ -2,7 +2,10 @@
     "categorias": [
         {
             "nombre": "Proyectos",
-            "subcategorias": []
+            "subcategorias": [{ "nombre": "Electrónica Analógica", "descripcion": "Estudio de señales continuas y componentes pasivos." },
+            { "nombre": "Electrónica de Control", "descripcion": "Automatización y control de sistemas electrónicos." },
+            { "nombre": "Electrónica de Potencia", "descripcion": "Transformación y regulación de energía eléctrica." }
+        ]
         },
         {
             "nombre": "Electrónica",
