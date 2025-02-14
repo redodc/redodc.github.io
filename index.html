@@ -158,32 +158,42 @@
             contenido.innerHTML = html;
         }
 
+        ///edit1
+        
         async function renderizarSubcategoria(categoria, subcategoria) {
     try {
         const response = await fetch("doc/contenido.json");
-        const contenidos = await response.json();
+        const data = await response.json();
+
+        // Aseguramos que la propiedad 'contenido' esté disponible y sea un array
+        const contenidos = data.contenido;
         const contenido = document.getElementById("contenido");
-        
+
         let html = `<h2>${subcategoria}</h2>`;
 
-        // Filtra los contenidos del archivo JSON
-        const filtrados = contenidos.filter(c => c.categoria === categoria && c.subcategoria === subcategoria);
+        // Verificamos si 'contenido' es un array
+        if (Array.isArray(contenidos)) {
+            // Filtramos los contenidos por categoria y subcategoria
+            const filtrados = contenidos.filter(c => c.categoria === categoria && c.subcategoria === subcategoria);
 
-        if (filtrados.length > 0) {
-            filtrados.forEach(item => {
-                html += `
-                    <div class='home-item'>
-                        <div class='home-text'>
-                            <h4>${item.titulo}</h4>
-                            <p>${item.descripcion}</p>
-                            <p>${item.articulo}</p>
+            if (filtrados.length > 0) {
+                filtrados.forEach(item => {
+                    html += `
+                        <div class='home-item'>
+                            <div class='home-text'>
+                                <h4>${item.titulo}</h4>
+                                <p>${item.descripcion}</p>
+                                <p>${item.articulo}</p>
+                            </div>
+                            <img src="${item.media}" alt="Imagen relacionada">
                         </div>
-                        <img src="${item.media}" alt="Imagen relacionada">
-                    </div>
-                `;
-            });
+                    `;
+                });
+            } else {
+                html += `<p>No hay contenido disponible para esta subcategoría.</p>`;
+            }
         } else {
-            html += `<p>No hay contenido disponible para esta subcategoría.</p>`;
+            html += `<p>Los datos no contienen un array de contenidos.</p>`;
         }
 
         contenido.innerHTML = html;
@@ -193,6 +203,8 @@
 }
 
 
+
+        ///edit1
         cargarDatos();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
