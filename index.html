@@ -165,7 +165,7 @@
                 const contenido = document.getElementById("contenido");
                 
                 let html = `<h2>${subcategoria}</h2>`;
-                contenidos.filter(c => c.categoria === categoria && c.subcategoria === subcategoria)
+                contenido.filter(c => c.categoria === categoria && c.subcategoria === subcategoria)
                     .forEach(item => {
                         html += `
                             <div class='home-item'>
