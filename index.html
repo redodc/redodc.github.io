@@ -86,12 +86,11 @@
 
         async function cargarDatos() {
             try {
-                const response = await fetch("doc/global.json"); // Cargar el JSON desde el nuevo archivo
-                const data = await response.json(); // Convertir a objeto
-
-                // Renderizar categorías en el navbar
+                const response = await fetch("doc/global.json");
+                const data = await response.json();
+                
                 const menu = document.getElementById("menuCategorias");
-                menu.innerHTML = ""; // Limpiar antes de agregar elementos
+                menu.innerHTML = "";
                 data.categorias.forEach(cat => {
                     let item = document.createElement("li");
                     item.classList.add("nav-item");
@@ -105,10 +104,35 @@
                     item.appendChild(link);
                     menu.appendChild(item);
                 });
-
-                renderizarHome(); // Cargar la vista inicial (Novedades)
+                
+                renderizarHome();
             } catch (error) {
                 console.error("Error cargando los datos:", error);
+            }
+        }
+
+        async function renderizarHome() {
+            try {
+                const response = await fetch("doc/noticias.json");
+                const noticias = await response.json();
+                const contenido = document.getElementById("contenido");
+                
+                let html = "<h2>Novedades</h2>";
+                noticias.slice(0, 15).forEach(noticia => {
+                    html += `
+                        <div class='home-item'>
+                            <div class='home-text'>
+                                <h4>${noticia.titulo}</h4>
+                                <p>${noticia.mensaje}</p>
+                                <p><small>${new Date(noticia.fecha).toLocaleDateString()}</small></p>
+                            </div>
+                            <img src="${noticia.imagen}" alt="Imagen de la noticia">
+                        </div>
+                    `;
+                });
+                contenido.innerHTML = html;
+            } catch (error) {
+                console.error("Error cargando las noticias:", error);
             }
         }
 
