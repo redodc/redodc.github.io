@@ -159,31 +159,39 @@
         }
 
         async function renderizarSubcategoria(categoria, subcategoria) {
-            try {
-                const response = await fetch("doc/contenido.json");
-                const contenidos = await response.json();
-                const contenido = document.getElementById("contenido");
-                
-                let html = `<h2>${subcategoria}</h2>`;
-                contenido.filter(c => c.categoria === categoria && c.subcategoria === subcategoria)
-                    .forEach(item => {
-                        html += `
-                            <div class='home-item'>
-                                <div class='home-text'>
-                                    <h4>${item.titulo}</h4>
-                                    <p>${item.descripcion}</p>
-                                    <p>${item.articulo}</p>
-                                </div>
-                                <img src="${item.media}" alt="Imagen relacionada">
-                            </div>
-                        `;
-                    });
-                
-                contenido.innerHTML = html;
-            } catch (error) {
-                console.error("Error cargando el contenido:", error);
-            }
+    try {
+        const response = await fetch("doc/contenido.json");
+        const contenidos = await response.json();
+        const contenido = document.getElementById("contenido");
+        
+        let html = `<h2>${subcategoria}</h2>`;
+
+        // Filtra los contenidos del archivo JSON
+        const filtrados = contenidos.filter(c => c.categoria === categoria && c.subcategoria === subcategoria);
+
+        if (filtrados.length > 0) {
+            filtrados.forEach(item => {
+                html += `
+                    <div class='home-item'>
+                        <div class='home-text'>
+                            <h4>${item.titulo}</h4>
+                            <p>${item.descripcion}</p>
+                            <p>${item.articulo}</p>
+                        </div>
+                        <img src="${item.media}" alt="Imagen relacionada">
+                    </div>
+                `;
+            });
+        } else {
+            html += `<p>No hay contenido disponible para esta subcategoría.</p>`;
         }
+
+        contenido.innerHTML = html;
+    } catch (error) {
+        console.error("Error cargando el contenido:", error);
+    }
+}
+
 
         cargarDatos();
     </script>
