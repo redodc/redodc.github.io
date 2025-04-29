@@ -1,0 +1,26 @@
+[
+    {
+        "titulo": "Introducción a Arduino: Primeros Pasos",
+        "mensaje": "Descubre qué es Arduino, cómo funciona y qué proyectos puedes crear con esta plataforma de hardware libre.",
+        "imagen": "https://example.com/arduino-intro.jpg",
+        "fecha": "2025-02-13T10:00:00Z"
+    },
+    {
+        "titulo": "Automatización del hogar con Arduino",
+        "mensaje": "Aprende a controlar luces y electrodomésticos con Arduino y módulos de relés para crear un hogar inteligente.",
+        "imagen": "https://example.com/arduino-home.jpg",
+        "fecha": "2025-02-12T15:30:00Z"
+    },
+    {
+        "titulo": "Midiendo temperatura y humedad con Arduino",
+        "mensaje": "Usa sensores DHT11 y Arduino para obtener datos ambientales y mostrarlos en un display LCD.",
+        "imagen": "https://example.com/arduino-sensor.jpg",
+        "fecha": "2025-02-11T12:15:00Z"
+    },
+    {
+        "titulo": "Control de motores con Arduino y PWM",
+        "mensaje": "Aprende a manejar motores de corriente continua con Arduino utilizando modulación por ancho de pulso (PWM).",
+        "imagen": "https://example.com/arduino-motor.jpg",
+        "fecha": "2025-02-10T18:45:00Z"
+    }
+]

@@ -1,0 +1,53 @@
+{
+    "contenido": [
+      {
+        "categoria": "Electrónica",
+        "subcategoria": "Electrónica Analógica",
+        "titulo": "Introducción a la Electrónica Analógica",
+        "descripcion": "Conceptos básicos y aplicaciones de la electrónica analógica.",
+        "articulo": "La electrónica analógica se basa en el uso de señales continuas...",
+        "media": "https://example.com/electronica_analogica.jpg"
+      },
+      {
+        "categoria": "Electrónica",
+        "subcategoria": "Electrónica de Control",
+        "titulo": "Controladores en Sistemas Electrónicos",
+        "descripcion": "Uso de microcontroladores y PLCs en automatización.",
+        "articulo": "Los sistemas de control electrónico son esenciales en la industria...",
+        "media": "https://example.com/electronica_control.jpg"
+      },
+      {
+        "categoria": "Electrónica",
+        "subcategoria": "Electrónica de Potencia",
+        "titulo": "Convertidores de Potencia",
+        "descripcion": "Transformación eficiente de energía eléctrica.",
+        "articulo": "Los convertidores de potencia se utilizan para adaptar niveles de voltaje...",
+        "media": "https://example.com/electronica_potencia.jpg"
+      },
+      {
+        "categoria": "Videojuegos Retro",
+        "subcategoria": "Consolas Clásicas",
+        "titulo": "Historia de las Consolas de 8 bits",
+        "descripcion": "Un recorrido por las primeras consolas de videojuegos.",
+        "articulo": "Las consolas de 8 bits marcaron una era en la industria del gaming...",
+        "media": "https://example.com/consolas_clasicas.jpg"
+      },
+      {
+        "categoria": "Videojuegos Retro",
+        "subcategoria": "Arcades",
+        "titulo": "Los Arcades más icónicos de los 80s",
+        "descripcion": "Juegos que marcaron la historia de los arcades.",
+        "articulo": "Los salones recreativos fueron el epicentro del gaming en los años 80s...",
+        "media": "https://example.com/arcades.jpg"
+      },
+      {
+        "categoria": "Videojuegos Retro",
+        "subcategoria": "Desarrollo Homebrew",
+        "titulo": "Cómo crear juegos para consolas retro",
+        "descripcion": "Introducción al desarrollo de software para plataformas antiguas.",
+        "articulo": "El desarrollo homebrew permite a los entusiastas crear juegos nuevos...",
+        "media": "https://example.com/homebrew.jpg"
+      }
+    ]
+  }
+  

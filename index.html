@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redodc - Renderización Dinámica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8e8e8;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar, .footer {
+            background-color: #343a40;
+            color: white;
+        }
+        .content-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            flex-grow: 1;
+        }
+        .card img {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .home-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .home-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .home-text {
+            flex-grow: 1;
+            text-align: left;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="renderizarHome()">Redodc</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto" id="menuCategorias"></ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenido -->
+    <div class="container content-container" id="contenido"></div>
+    
+    <!-- Footer -->
+    <footer class="footer py-3 mt-4">
+        <p id="footer-text">Contenido generado por Redodc</p>
+    </footer>
+    
+    <script>
+        document.getElementById("footer-text").innerText += " - " + new Date().getFullYear();
+
+        async function cargarDatos() {
+            try {
+                const response = await fetch("doc/global.json");
+                const data = await response.json();
+                
+                const menu = document.getElementById("menuCategorias");
+                menu.innerHTML = "";
+                data.categorias.forEach(cat => {
+                    let item = document.createElement("li");
+                    item.classList.add("nav-item");
+
+                    let link = document.createElement("a");
+                    link.classList.add("nav-link");
+                    link.href = "#";
+                    link.innerText = cat.nombre;
+                    link.onclick = () => renderizarCategoria(cat);
+
+                    item.appendChild(link);
+                    menu.appendChild(item);
+                });
+                
+                renderizarHome();
+            } catch (error) {
+                console.error("Error cargando los datos:", error);
+            }
+        }
+
+        async function renderizarHome() {
+            try {
+                const response = await fetch("doc/noticias.json");
+                const noticias = await response.json();
+                const contenido = document.getElementById("contenido");
+                
+                let html = "<h2>Novedades</h2>";
+                noticias.slice(0, 15).forEach(noticia => {
+                    html += `
+                        <div class='home-item'>
+                            <div class='home-text'>
+                                <h4>${noticia.titulo}</h4>
+                                <p>${noticia.mensaje}</p>
+                                <p><small>${new Date(noticia.fecha).toLocaleDateString()}</small></p>
+                            </div>
+                            <img src="${noticia.imagen}" alt="Imagen de la noticia">
+                        </div>
+                    `;
+                });
+                contenido.innerHTML = html;
+            } catch (error) {
+                console.error("Error cargando las noticias:", error);
+            }
+        }
+
+        async function renderizarCategoria(categoria) {
+            const contenido = document.getElementById("contenido");
+            let html = `<h2>${categoria.nombre}</h2>`;
+
+            if (categoria.subcategorias && categoria.subcategorias.length > 0) {
+                categoria.subcategorias.forEach(sub => {
+                    html += `
+                        <div class='home-item' onclick='renderizarSubcategoria("${categoria.nombre}", "${sub.nombre}")'>
+                            <div class='home-text'>
+                                <p><strong>${sub.nombre}</strong></p>
+                                <p>${sub.descripcion}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                html += `<p>No hay subcategorías disponibles.</p>`;
+            }
+
+            contenido.innerHTML = html;
+        }
+
+        ///edit1
+        
+        async function renderizarSubcategoria(categoria, subcategoria) {
+    try {
+        const response = await fetch("doc/contenido.json");
+        const data = await response.json();
+
+        // Aseguramos que la propiedad 'contenido' esté disponible y sea un array
+        const contenidos = data.contenido;
+        const contenido = document.getElementById("contenido");
+
+        let html = `<h2>${subcategoria}</h2>`;
+
+        // Verificamos si 'contenido' es un array
+        if (Array.isArray(contenidos)) {
+            // Filtramos los contenidos por categoria y subcategoria
+            const filtrados = contenidos.filter(c => c.categoria === categoria && c.subcategoria === subcategoria);
+
+            if (filtrados.length > 0) {
+                filtrados.forEach(item => {
+                    html += `
+                        <div class='home-item'>
+                            <div class='home-text'>
+                                <h4>${item.titulo}</h4>
+                                <p>${item.descripcion}</p>
+                                <p>${item.articulo}</p>
+                            </div>
+                            <img src="${item.media}" alt="Imagen relacionada">
+                        </div>
+                    `;
+                });
+            } else {
+                html += `<p>No hay contenido disponible para esta subcategoría.</p>`;
+            }
+        } else {
+            html += `<p>Los datos no contienen un array de contenidos.</p>`;
+        }
+
+        contenido.innerHTML = html;
+    } catch (error) {
+        console.error("Error cargando el contenido:", error);
+    }
+}
+
+
+
+        ///edit1
+        cargarDatos();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
